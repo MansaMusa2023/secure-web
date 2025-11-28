@@ -23,5 +23,5 @@ jobs:
           chmod 600 ~/.ssh/id_ed25519
 
           ssh-keyscan -H "$SSH_HOST" >> ~/.ssh/known_hosts
-
-          ssh -o StrictHostKeyChecking=yes "$SSH_USER@$SSH_HOST" "/usr/local/bin/deploy-secure-web.sh"
+          ssh -vvv -o StrictHostKeyChecking=yes "$SSH_USER@$SSH_HOST" "/usr/local/bin/deploy-secure-web.sh"
+          #ssh -o StrictHostKeyChecking=yes "$SSH_USER@$SSH_HOST" "/usr/local/bin/deploy-secure-web.sh"
