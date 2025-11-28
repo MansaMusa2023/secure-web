@@ -12,16 +12,18 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Setup SSH and run deploy on server
+      - name: Test SSH connection to server
         env:
           SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
           SSH_USER: ${{ secrets.SSH_USER }}
           SSH_HOST: ${{ secrets.SSH_HOST }}
         run: |
+          set -xe
           mkdir -p ~/.ssh
           echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_ed25519
           chmod 600 ~/.ssh/id_ed25519
 
           ssh-keyscan -H "$SSH_HOST" >> ~/.ssh/known_hosts
-          ssh -vvv -o StrictHostKeyChecking=yes "$SSH_USER@$SSH_HOST" "/usr/local/bin/deploy-secure-web.sh"
-          #ssh -o StrictHostKeyChecking=yes "$SSH_USER@$SSH_HOST" "/usr/local/bin/deploy-secure-web.sh"
+
+          # Just test SSH, no deploy yet
+          ssh -vvv -o StrictHostKeyChecking=yes "$SSH_USER@$SSH_HOST" "echo connected-from-github"
