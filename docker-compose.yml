@@ -1,0 +1,29 @@
+version: "3.9"
+
+services:
+  app:
+    build: .
+    container_name: secure-web-app
+    restart: unless-stopped
+    env_file:
+      - .env.docker
+    environment:
+      - NODE_ENV=production
+    ports:
+      - "3000:3000"
+    depends_on:
+      - db
+
+  db:
+    image: postgres:16-alpine
+    container_name: secure-web-db
+    restart: unless-stopped
+    environment:
+      - POSTGRES_USER=secure_user
+      - POSTGRES_PASSWORD=change_me_strong
+      - POSTGRES_DB=secure_db
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+volumes:
+  pgdata:
