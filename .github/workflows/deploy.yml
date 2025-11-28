@@ -25,7 +25,5 @@ jobs:
 
           ssh-keyscan -H "$SSH_HOST" >> ~/.ssh/known_hosts
 
-          # Just test SSH, no deploy yet
-          ssh -vvv -o StrictHostKeyChecking=yes -p 2222 "$SSH_USER@$SSH_HOST" "echo connected-from-github"
-
-#          ssh -vvv -o StrictHostKeyChecking=yes "$SSH_USER@$SSH_HOST" "echo connected-from-github"
+          # Note the -p 222 here
+          ssh -vvv -o StrictHostKeyChecking=yes -p 222 "$SSH_USER@$SSH_HOST" "echo connected-from-github"
